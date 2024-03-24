@@ -1,8 +1,10 @@
-import PropTypes from 'prop-types';
 import { PLAYER_ACTION, PLAER_NAME, STATUS, PLAYER } from '../../constants';
 import { InformationLayot } from './information-layout';
+import { useReduxState } from '../../redux-manager';
 
-export const Information = ({ status, currentPlayer }) => {
+export const Information = () => {
+    const { status, currentPlayer } = useReduxState();
+
     const playerAction = PLAYER_ACTION[status];
     const playerName = PLAER_NAME[currentPlayer];
   
@@ -10,9 +12,4 @@ export const Information = ({ status, currentPlayer }) => {
         status === STATUS.DRAW ? 'Ничья' : `${playerAction}: ${playerName}`;
 
     return <InformationLayot information={information} />;
-};
-
-Information.prototype = {
-    status: PropTypes.oneOf([STATUS.DRAW, STATUS.TURN, STATUS.WIN]),
-    currentPlayer:  PropTypes.oneOf([PLAYER.CROSS, PLAYER.NOUGHT, PLAYER.NOBODY]),
 };

@@ -1,25 +1,13 @@
-import { useState } from 'react';
 import { GameLayout } from './game-layout';
-import { handleCellClick } from './hendlers/handle-cell-click';
-import { handleRestart } from './hendlers/handle-restart';
-import { createEmptyField } from './utils';
-
-import { STATUS, PLAYER } from './constants';
+import { useDispatch } from './redux-manager';
+import { RESTART_GAME } from './actions';
 
 export const Game = () => {
-  const [status, setStatus] = useState(STATUS.TURN);
-  const [currentPlayer, setCurrentPlayer] = useState(PLAYER.CROSS); 
-  const [field, setField] = useState(createEmptyField());
- 
-const state = { status, setStatus, currentPlayer, setCurrentPlayer, field, setField };
+  const dispatch = useDispatch();
 
-    return (
-    <GameLayout 
-      status={status} 
-      currentPlayer={currentPlayer} 
-      field={field} 
-      handleCellClick={(cellindex) => handleCellClick(state, cellindex)}
-      handleRestart={() => handleRestart(state)}
-    />
-  );
+  const handleRestart = () => {
+    dispatch(RESTART_GAME);
+  }
+
+    return <GameLayout handleRestart={handleRestart} />;
 };
